@@ -29,7 +29,7 @@
 
 // 4. Add click event listeners to the start and stop buttons, calling the respective functions when clicked
 
-function createChangeColor({ btnStartE1, btnStopE1, bodyE1 }) {
+function createChangerColor({ btnStartEl, btnStopEl, bodyEl }) {
     let onChange = null;
 
     function getRandomHexColor() {
@@ -46,16 +46,23 @@ function createChangeColor({ btnStartE1, btnStopE1, bodyE1 }) {
     }
 
     function start() {
-        btnToggle(btnStartE1);
-        btnToggle(btnStopE1);
+        btnToggle(btnStartEl);
+        btnToggle(btnStopEl);
 
         onChange = setInterval(() =>  {
-            bodyE1.style.backgroundColor = getRandomHexColor();
+            bodyEl.style.backgroundColor = getRandomHexColor();
         }, 1000);
     }
 
+    function stop() {
+        btnToggle(btnStopEl);
+        btnToggle(btnStartEl);
+
+        clearInterval(onChange);
+    }
+
     // Initialize
-    btnToggle(btnStopE1);
+    btnToggle(btnStopEl);
 
     //Return an object to expose the start and stop functions
     return { start, stop };
@@ -65,15 +72,15 @@ function createChangeColor({ btnStartE1, btnStopE1, bodyE1 }) {
 // Usage
 
 const refs = {
-    btnStartE1: document.querySelector('button[data-start]'),
-    btnStopE1: document.querySelector('button[data-stop]'),
-    bodyE1: document.body,
+    btnStartEl: document.querySelector('button[data-start]'),
+    btnStopEl: document.querySelector('button[data-stop]'),
+    bodyEl: document.body,
 };
 
 const { start, stop } = createChangerColor(refs);
 
-refs.btnStartE1.addEventListener('click', start);
-refs.addEventListener('click', stop);
+refs.btnStartEl.addEventListener('click', start);
+refs.btnStopEl.addEventListener('click', stop);
 
 
 
